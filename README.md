@@ -1,4 +1,4 @@
-## Facenet：人脸识别模型在Pytorch当中的实现
+## Arcface：人脸识别模型在Pytorch当中的实现
 ---
 
 ## 目录
@@ -13,27 +13,27 @@
 ## 性能情况
 | 训练数据集 | 权值文件名称 | 测试数据集 | 输入图片大小 | accuracy |
 | :-----: | :-----: | :------: | :------: | :------: |
-| CASIA-WebFace | [facenet_mobilenet.pth](https://github.com/bubbliiiing/facenet-pytorch/releases/download/v1.0/facenet_mobilenet.pth) | LFW | 160x160 | 98.23% |
-| CASIA-WebFace | [facenet_inception_resnetv1.pth](https://github.com/bubbliiiing/facenet-pytorch/releases/download/v1.0/facenet_inception_resnetv1.pth) | LFW | 160x160 | 98.78% |
+| CASIA-WebFace | [arcface_mobilenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilenet.pth) | LFW | 112x112 | 98.23% |
+| CASIA-WebFace | [arcface_mobilefacenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilefacenet.pth) | LFW | 112x112 | 99.08% |
 
 ## 所需环境
 pytorch==1.2.0
 
 ## 文件下载
-已经训练好的facenet_mobilenet.pth和facenet_inception_resnetv1.pth可以在百度网盘下载。    
+已经训练好的权值可以在百度网盘下载。    
 链接: https://pan.baidu.com/s/1ER7Ok6mTGh_1R36YTlErbw 提取码: rm69    
 
 训练用的CASIA-WebFaces数据集以及评估用的LFW数据集可以在百度网盘下载。    
-链接: https://pan.baidu.com/s/1fhiHlylAFVoR43yfDbi4Ag 提取码: gkch    
+链接: https://pan.baidu.com/s/1qMxFR8H_ih0xmY-rKgRejw 提取码: bcrq   
 
 ## 预测步骤
 ### a、使用预训练权重
-1. 下载完库后解压，在model_data文件夹里已经有了facenet_mobilenet.pth，可直接运行predict.py输入：
+1. 下载完库后解压，可直接运行predict.py输入：
 ```python
 img\1_001.jpg
 img\1_002.jpg
 ```  
-2. 也可以在百度网盘下载facenet_inception_resnetv1.pth，放入model_data，修改facenet.py文件的model_path后，输入：
+2. 也可以在百度网盘下载权值，放入model_data，修改facenet.py文件的model_path后，输入：
 ```python
 img\1_001.jpg
 img\1_002.jpg
@@ -43,10 +43,29 @@ img\1_002.jpg
 2. 在facenet.py文件里面，在如下部分修改model_path和backbone使其对应训练好的文件；**model_path对应logs文件夹下面的权值文件，backbone对应主干特征提取网络**。  
 ```python
 _defaults = {
-    "model_path"    : "model_data/facenet_mobilenet.pth",
-    "input_shape"   : (160, 160, 3),
-    "backbone"      : "mobilenet",
-    "cuda"          : True,
+    #--------------------------------------------------------------------------#
+    #   使用自己训练好的模型进行预测要修改model_path，指向logs文件夹下的权值文件
+    #   训练好后logs文件夹下存在多个权值文件，选择验证集损失较低的即可。
+    #   验证集损失较低不代表准确度较高，仅代表该权值在验证集上泛化性能较好。
+    #--------------------------------------------------------------------------#
+    "model_path"        : "model_data/arcface_mobilefacenet.pth",
+    #--------------------------------------------------------------------------#
+    #   输入图片的大小。
+    #--------------------------------------------------------------------------#
+    "input_shape"       : [112, 112, 3],
+    #--------------------------------------------------------------------------#
+    #   所使用到的主干特征提取网络，与训练的相同
+    #--------------------------------------------------------------------------#
+    "backbone"          : "arcface_mobilefacenet",
+    #--------------------------------------#
+    #   是否进行不失真的resize
+    #--------------------------------------#
+    "letterbox_image"   : True,
+    #--------------------------------------#
+    #   是否使用Cuda
+    #   没有GPU可以设置成False
+    #--------------------------------------#
+    "cuda"              : True,
 }
 ```
 3. 运行predict.py，输入  
@@ -78,6 +97,6 @@ img\1_002.jpg
 3. 运行eval_LFW.py来进行模型准确率评估。
 
 ## Reference
-https://github.com/davidsandberg/facenet  
-https://github.com/timesler/facenet-pytorch  
+https://github.com/deepinsight/insightface  
+https://github.com/timesler/facenet-pytorch   
 
