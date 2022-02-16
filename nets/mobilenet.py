@@ -47,17 +47,25 @@ class MobileNetV1(nn.Module):
             conv_dw(1024, 1024, 1), # 241 + 64 = 301
         )
 
-        self.bn2        = nn.BatchNorm2d(1024, eps=1e-05)
+        self.sep        = nn.Conv2d(1024, 512, kernel_size=1, bias=False)
+        self.sep_bn     = nn.BatchNorm2d(512)
+        self.prelu      = nn.PReLU(512)
+
+        self.bn2        = nn.BatchNorm2d(512, eps=1e-05)
         self.dropout    = nn.Dropout(p=dropout_keep_prob, inplace=True)
-        self.linear     = nn.Linear(1024 * self.fc_scale, embedding_size)
+        self.linear     = nn.Linear(512 * self.fc_scale, embedding_size)
         self.features   = nn.BatchNorm1d(embedding_size, eps=1e-05)
         if pretrained:
-            self.load_state_dict(torch.load("model_data/mobilenet_v1_weights.pth"), strict = False)
+            self.load_state_dict(torch.load("model_data/mobilenet_v1_backbone_weights.pth"), strict = False)
 
     def forward(self, x):
         x = self.stage1(x)
         x = self.stage2(x)
         x = self.stage3(x)
+
+        x = self.sep(x)
+        x = self.sep_bn(x)
+        x = self.prelu(x)
 
         x = self.bn2(x)
         x = torch.flatten(x, 1)

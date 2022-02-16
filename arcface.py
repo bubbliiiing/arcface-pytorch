@@ -14,23 +14,30 @@ class Arcface(object):
         #   训练好后logs文件夹下存在多个权值文件，选择验证集损失较低的即可。
         #   验证集损失较低不代表准确度较高，仅代表该权值在验证集上泛化性能较好。
         #--------------------------------------------------------------------------#
-        "model_path"        : "model_data/arcface_mobilenet.pth",
-        #--------------------------------------------------------------------------#
+        "model_path"        : "model_data/arcface_mobilefacenet.pth",
+        #-------------------------------------------#
         #   输入图片的大小。
-        #--------------------------------------------------------------------------#
+        #-------------------------------------------#
         "input_shape"       : [112, 112, 3],
-        #--------------------------------------------------------------------------#
+        #-------------------------------------------#
         #   所使用到的主干特征提取网络，与训练的相同
-        #--------------------------------------------------------------------------#
-        "backbone"          : "mobilenetv1",
-        #--------------------------------------#
+        #   mobilefacenet
+        #   mobilenetv1
+        #   iresnet18
+        #   iresnet34
+        #   iresnet50
+        #   iresnet100
+        #   iresnet200
+        #-------------------------------------------#
+        "backbone"          : "mobilefacenet",
+        #-------------------------------------------#
         #   是否进行不失真的resize
-        #--------------------------------------#
+        #-------------------------------------------#
         "letterbox_image"   : True,
-        #--------------------------------------#
+        #-------------------------------------------#
         #   是否使用Cuda
         #   没有GPU可以设置成False
-        #--------------------------------------#
+        #-------------------------------------------#
         "cuda"              : True,
     }
 
@@ -75,8 +82,8 @@ class Arcface(object):
         #   图片预处理，归一化
         #---------------------------------------------------#
         with torch.no_grad():
-            image_1 = resize_image(image_1, [self.input_shape[1], self.input_shape[0]], letterbox_image=True)
-            image_2 = resize_image(image_2, [self.input_shape[1], self.input_shape[0]], letterbox_image=True)
+            image_1 = resize_image(image_1, [self.input_shape[1], self.input_shape[0]], letterbox_image=self.letterbox_image)
+            image_2 = resize_image(image_2, [self.input_shape[1], self.input_shape[0]], letterbox_image=self.letterbox_image)
             
             photo_1 = torch.from_numpy(np.expand_dims(np.transpose(preprocess_input(np.array(image_1, np.float32)), (2, 0, 1)), 0))
             photo_2 = torch.from_numpy(np.expand_dims(np.transpose(preprocess_input(np.array(image_2, np.float32)), (2, 0, 1)), 0))

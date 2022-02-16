@@ -36,28 +36,48 @@ class Arcface_Head(Module):
         return output
 
 class Arcface(nn.Module):
-    def __init__(self, embedding_size=512, num_classes=None, backbone="mobilefacenet", pretrained=False, mode="train", dropout_keep_prob=0.5):
+    def __init__(self, num_classes=None, backbone="mobilefacenet", pretrained=False, mode="train"):
         super(Arcface, self).__init__()
         if backbone=="mobilefacenet":
-            self.arcface = get_mbf(embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 128
+            s               = 32
+            self.arcface    = get_mbf(embedding_size=embedding_size, pretrained=pretrained)
+
         elif backbone=="mobilenetv1":
-            self.arcface = get_mobilenet(dropout_keep_prob=dropout_keep_prob, embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 512
+            s               = 64
+            self.arcface    = get_mobilenet(dropout_keep_prob=0.5, embedding_size=embedding_size, pretrained=pretrained)
+
         elif backbone=="iresnet18":
-            self.arcface = iresnet18(dropout_keep_prob=dropout_keep_prob, embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 512
+            s               = 64
+            self.arcface    = iresnet18(dropout_keep_prob=0.5, embedding_size=embedding_size, pretrained=pretrained)
+
         elif backbone=="iresnet34":
-            self.arcface = iresnet34(dropout_keep_prob=dropout_keep_prob, embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 512
+            s               = 64
+            self.arcface    = iresnet34(dropout_keep_prob=0.5, embedding_size=embedding_size, pretrained=pretrained)
+
         elif backbone=="iresnet50":
-            self.arcface = iresnet50(dropout_keep_prob=dropout_keep_prob, embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 512
+            s               = 64
+            self.arcface    = iresnet50(dropout_keep_prob=0.5, embedding_size=embedding_size, pretrained=pretrained)
+
         elif backbone=="iresnet100":
-            self.arcface = iresnet100(dropout_keep_prob=dropout_keep_prob, embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 512
+            s               = 64
+            self.arcface    = iresnet100(dropout_keep_prob=0.5, embedding_size=embedding_size, pretrained=pretrained)
+
         elif backbone=="iresnet200":
-            self.arcface = iresnet200(dropout_keep_prob=dropout_keep_prob, embedding_size=embedding_size, pretrained=pretrained)
+            embedding_size  = 512
+            s               = 64
+            self.arcface    = iresnet200(dropout_keep_prob=0.5, embedding_size=embedding_size, pretrained=pretrained)
         else:
             raise ValueError('Unsupported backbone - `{}`, Use mobilefacenet, mobilenetv1.'.format(backbone))
 
         self.mode = mode
         if mode == "train":
-            self.head = Arcface_Head(embedding_size=embedding_size, num_classes=num_classes)
+            self.head = Arcface_Head(embedding_size=embedding_size, num_classes=num_classes, s=s)
 
     def forward(self, x, mode = "extractor"):
         if mode == 'extractor':
