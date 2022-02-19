@@ -36,14 +36,14 @@ pytorch==1.2.0
 img\1_001.jpg
 img\1_002.jpg
 ```  
-2. 也可以在百度网盘下载权值，放入model_data，修改facenet.py文件的model_path后，输入：
+2. 也可以在百度网盘下载权值，放入model_data，修改arcface.py文件的model_path后，输入：
 ```python
 img\1_001.jpg
 img\1_002.jpg
 ```  
 ### b、使用自己训练的权重
 1. 按照训练步骤训练。  
-2. 在facenet.py文件里面，在如下部分修改model_path和backbone使其对应训练好的文件；**model_path对应logs文件夹下面的权值文件，backbone对应主干特征提取网络**。  
+2. 在arcface.py文件里面，在如下部分修改model_path和backbone使其对应训练好的文件；**model_path对应logs文件夹下面的权值文件，backbone对应主干特征提取网络**。  
 ```python
 _defaults = {
     #--------------------------------------------------------------------------#
@@ -91,7 +91,7 @@ img\1_002.jpg
 ```  
 2. 下载好数据集，将训练用的CASIA-WebFaces数据集以及评估用的LFW数据集，解压后放在根目录。
 3. 在训练前利用txt_annotation.py文件生成对应的cls_train.txt。  
-4. 利用train.py训练facenet模型，训练前，根据自己的需要选择backbone，model_path和backbone一定要对应。
+4. 利用train.py训练模型，训练前，根据自己的需要选择backbone，model_path和backbone一定要对应。
 5. 运行train.py即可开始训练。
 
 ## 评估步骤
