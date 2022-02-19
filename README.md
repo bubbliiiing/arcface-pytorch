@@ -11,17 +11,20 @@
 7. [参考资料 Reference](#Reference)
 
 ## 性能情况
-| 训练数据集 | 权值文件名称 | 测试数据集 | 输入图片大小 | accuracy |
-| :-----: | :-----: | :------: | :------: | :------: |
-| CASIA-WebFace | [arcface_mobilenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilenet.pth) | LFW | 112x112 | 98.23% |
-| CASIA-WebFace | [arcface_mobilefacenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilefacenet.pth) | LFW | 112x112 | 99.08% |
+| 训练数据集 | 权值文件名称 | 测试数据集 | 输入图片大小 | accuracy | Validation rate |
+| :-----: | :-----: | :------: | :------: | :------: | :------: |
+| CASIA-WebFace | [arcface_mobilenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilenet.pth) | LFW | 112x112 | 99.11% | Validation rate: 0.95033+-0.02152 @ FAR=0.00133 |
+| CASIA-WebFace | [arcface_mobilefacenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilefacenet.pth) | LFW | 112x112 | 98.78% | 0.91100+-0.01745 @ FAR=0.00100 |
+| CASIA-WebFace | [arcface_iresnet50.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_iresnet50.pth) | LFW | 112x112 | 98.93% | 0.93100+-0.01422 @ FAR=0.00133 |
+
+（arcface_mobilenet的准确度相比其它较高是因为使用了backbone的预训练权重，正在努力调参中。）
 
 ## 所需环境
 pytorch==1.2.0
 
 ## 文件下载
 已经训练好的权值可以在百度网盘下载。    
-链接: https://pan.baidu.com/s/1ER7Ok6mTGh_1R36YTlErbw 提取码: rm69    
+链接: https://pan.baidu.com/s/1ElJlfmMwOGX699MsgLY8qA 提取码: z3rq   
 
 训练用的CASIA-WebFaces数据集以及评估用的LFW数据集可以在百度网盘下载。    
 链接: https://pan.baidu.com/s/1qMxFR8H_ih0xmY-rKgRejw 提取码: bcrq   
