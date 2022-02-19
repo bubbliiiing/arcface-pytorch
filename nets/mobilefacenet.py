@@ -87,6 +87,22 @@ class MobileFaceNet(Module):
         self.features   = nn.Conv2d(512, embedding_size, kernel_size=1, bias=False)
         self.last_bn    = nn.BatchNorm2d(embedding_size)
   
+        self._initialize_weights()
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                if m.bias is not None:
+                    m.bias.data.zero_()
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
+            elif isinstance(m, nn.Linear):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                if m.bias is not None:
+                    m.bias.data.zero_()
+                    
     def forward(self, x):
         x = self.conv1(x)
         x = self.conv2_dw(x)

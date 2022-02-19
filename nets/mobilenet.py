@@ -55,8 +55,16 @@ class MobileNetV1(nn.Module):
         self.dropout    = nn.Dropout(p=dropout_keep_prob, inplace=True)
         self.linear     = nn.Linear(512 * self.fc_scale, embedding_size)
         self.features   = nn.BatchNorm1d(embedding_size, eps=1e-05)
+        
         if pretrained:
             self.load_state_dict(torch.load("model_data/mobilenet_v1_backbone_weights.pth"), strict = False)
+        else:
+            for m in self.modules():
+                if isinstance(m, nn.Conv2d):
+                    nn.init.normal_(m.weight, 0, 0.1)
+                elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+                    nn.init.constant_(m.weight, 1)
+                    nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
         x = self.stage1(x)

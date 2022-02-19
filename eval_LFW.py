@@ -1,7 +1,5 @@
-import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
-from tqdm import tqdm
 
 from nets.arcface import Arcface
 from utils.dataloader import LFWDataset

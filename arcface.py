@@ -63,10 +63,9 @@ class Arcface(object):
         #   载入模型与权值
         #---------------------------------------------------#
         print('Loading weights into state dict...')
-        model   = arcface(backbone=self.backbone, mode="predict")
-        device  = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        model.load_state_dict(torch.load(self.model_path, map_location=device), strict=False)
-        self.net = model.eval()
+        device      = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.net    = arcface(backbone=self.backbone, mode="predict").eval()
+        self.net.load_state_dict(torch.load(self.model_path, map_location=device), strict=False)
         print('{} model loaded.'.format(self.model_path))
 
         if self.cuda:
