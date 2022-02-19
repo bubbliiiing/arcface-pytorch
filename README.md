@@ -13,7 +13,7 @@
 ## 性能情况
 | 训练数据集 | 权值文件名称 | 测试数据集 | 输入图片大小 | accuracy | Validation rate |
 | :-----: | :-----: | :------: | :------: | :------: | :------: |
-| CASIA-WebFace | [arcface_mobilenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilenet.pth) | LFW | 112x112 | 99.11% | Validation rate: 0.95033+-0.02152 @ FAR=0.00133 |
+| CASIA-WebFace | [arcface_mobilenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilenet.pth) | LFW | 112x112 | 99.11% |  0.95033+-0.02152 @ FAR=0.00133 |
 | CASIA-WebFace | [arcface_mobilefacenet.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_mobilefacenet.pth) | LFW | 112x112 | 98.78% | 0.91100+-0.01745 @ FAR=0.00100 |
 | CASIA-WebFace | [arcface_iresnet50.pth](https://github.com/bubbliiiing/arcface-pytorch/releases/download/v1.0/arcface_iresnet50.pth) | LFW | 112x112 | 98.93% | 0.93100+-0.01422 @ FAR=0.00133 |
 
