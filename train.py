@@ -136,7 +136,7 @@ if __name__ == "__main__":
         model_dict.update(pretrained_dict)
         model.load_state_dict(model_dict)
 
-    loss_history    = LossHistory("logs/", model)
+    loss_history    = LossHistory("logs/", model, input_shape=input_shape)
     model_train     = model.train()
     if Cuda:
         model_train = torch.nn.DataParallel(model)
