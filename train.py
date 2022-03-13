@@ -197,9 +197,9 @@ if __name__ == "__main__":
         train_dataset   = FacenetDataset(input_shape, lines[:num_train], random = True)
         val_dataset     = FacenetDataset(input_shape, lines[num_train:], random = False)
 
-        gen             = DataLoader(train_dataset, batch_size=batch_size, num_workers=num_workers, pin_memory=True,
+        gen             = DataLoader(train_dataset, shuffle=True, batch_size=batch_size, num_workers=num_workers, pin_memory=True,
                                 drop_last=True, collate_fn=dataset_collate)
-        gen_val         = DataLoader(val_dataset, batch_size=batch_size, num_workers=num_workers, pin_memory=True,
+        gen_val         = DataLoader(val_dataset, shuffle=True, batch_size=batch_size, num_workers=num_workers, pin_memory=True,
                                 drop_last=True, collate_fn=dataset_collate)
 
         for epoch in range(Init_Epoch, Epoch):
