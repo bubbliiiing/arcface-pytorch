@@ -119,7 +119,7 @@ class Arcface(object):
         #---------------------------------------------------------#
         #   归一化+添加上batch_size维度
         #---------------------------------------------------------#
-        image_data  = torch.from_numpy(np.expand_dims(np.transpose(preprocess_input(np.array(image_1, np.float32)), (2, 0, 1)), 0))
+        image_data  = torch.from_numpy(np.expand_dims(np.transpose(preprocess_input(np.array(image_data, np.float32)), (2, 0, 1)), 0))
         with torch.no_grad():
             #---------------------------------------------------#
             #   图片传入网络进行预测
