@@ -1,14 +1,16 @@
+import os
+
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from tqdm import tqdm
 
-from .utils_metrics import evaluate
 from .utils import get_lr
+from .utils_metrics import evaluate
 
 
-def fit_one_epoch(model_train, model, loss_history, optimizer, epoch, epoch_step, epoch_step_val, gen, gen_val, Epoch, cuda, test_loader, lfw_eval_flag, save_period):
+def fit_one_epoch(model_train, model, loss_history, optimizer, epoch, epoch_step, epoch_step_val, gen, gen_val, Epoch, cuda, test_loader, lfw_eval_flag, save_period, save_dir):
     total_loss          = 0
     total_accuracy      = 0
 
@@ -101,5 +103,5 @@ def fit_one_epoch(model_train, model, loss_history, optimizer, epoch, epoch_step
 
     loss_history.append_loss(epoch, np.mean(accuracy) if lfw_eval_flag else total_accuracy / epoch_step, total_loss / epoch_step, val_total_loss / epoch_step_val)
     print('Total Loss: %.4f' % (total_loss / epoch_step))
-    if (epoch + 1) % save_period == 0:
-        torch.save(model.state_dict(), 'logs/ep%03d-loss%.3f-val_loss%.3f.pth'%((epoch+1), total_loss / epoch_step, val_total_loss / epoch_step_val))
+    if (epoch + 1) % save_period == 0 or epoch + 1 == Epoch:
+        torch.save(model.state_dict(), os.path.join(save_dir, 'ep%03d-loss%.3f-val_loss%.3f.pth'%((epoch+1), total_loss / epoch_step, val_total_loss / epoch_step_val)))
