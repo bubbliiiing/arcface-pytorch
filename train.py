@@ -68,9 +68,9 @@ if __name__ == "__main__":
     #   在此提供若干参数设置建议，各位训练者根据自己的需求进行灵活调整：
     #   （一）从预训练权重开始训练：
     #       Adam：
-    #           Init_Epoch = 0，Freeze_Epoch = 50，UnFreeze_Epoch = 100，optimizer_type = 'adam'，Init_lr = 1e-3，weight_decay = 0。
+    #           Init_Epoch = 0，Epoch = 100，optimizer_type = 'adam'，Init_lr = 1e-3，weight_decay = 0。
     #       SGD：
-    #           Init_Epoch = 0，Freeze_Epoch = 50，UnFreeze_Epoch = 100，optimizer_type = 'sgd'，Init_lr = 1e-2，weight_decay = 5e-4。
+    #           Init_Epoch = 0，Epoch = 100，optimizer_type = 'sgd'，Init_lr = 1e-2，weight_decay = 5e-4。
     #       其中：UnFreeze_Epoch可以在100-300之间调整。
     #   （二）batch_size的设置：
     #       在显卡能够接受的范围内，以大为好。显存不足与数据集大小无关，提示显存不足（OOM或者CUDA out of memory）请调小batch_size。
@@ -80,12 +80,12 @@ if __name__ == "__main__":
     #------------------------------------------------------#
     #   训练参数
     #   Init_Epoch      模型当前开始的训练世代
-    #   batch_size      每次输入的图片数量
     #   Epoch           模型总共训练的epoch
+    #   batch_size      每次输入的图片数量
     #------------------------------------------------------#
-    batch_size      = 64
     Init_Epoch      = 0
     Epoch           = 100
+    batch_size      = 64
 
     #------------------------------------------------------------------#
     #   其它训练参数：学习率、优化器、学习率下降有关
