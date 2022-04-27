@@ -116,7 +116,10 @@ def fit_one_epoch(model_train, model, loss_history, optimizer, epoch, epoch_step
     if local_rank == 0:
         pbar.close()
         print('Finish Validation')
-        print('LFW_Accuracy: %2.5f+-%2.5f' % (np.mean(accuracy), np.std(accuracy)))
+        
+        if lfw_eval_flag:
+            print('LFW_Accuracy: %2.5f+-%2.5f' % (np.mean(accuracy), np.std(accuracy)))
+            
         loss_history.append_loss(epoch, np.mean(accuracy) if lfw_eval_flag else total_accuracy / epoch_step, total_loss / epoch_step, val_total_loss / epoch_step_val)
         print('Total Loss: %.4f' % (total_loss / epoch_step))
         if (epoch + 1) % save_period == 0 or epoch + 1 == Epoch:
