@@ -1,10 +1,13 @@
-import numpy as np
 import os
+
+import numpy as np
+import torch
 import torch.utils.data as data
 import torchvision.datasets as datasets
-
 from PIL import Image
-from .utils import resize_image, preprocess_input, cvtColor
+
+from .utils import cvtColor, preprocess_input, resize_image
+
 
 class FacenetDataset(data.Dataset):
     def __init__(self, input_shape, lines, random):
@@ -39,8 +42,8 @@ def dataset_collate(batch):
     for image, y in batch:
         images.append(image)
         targets.append(y)
-    images  = np.array(images)
-    targets = np.array(targets)
+    images  = torch.from_numpy(np.array(images)).type(torch.FloatTensor)
+    targets = torch.from_numpy(np.array(targets)).long()
     return images, targets
 
 class LFWDataset(datasets.ImageFolder):
