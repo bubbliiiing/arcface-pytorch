@@ -29,7 +29,7 @@ class Arcface_Head(Module):
         phi     = cosine * self.cos_m - sine * self.sin_m
         phi     = torch.where(cosine.float() > self.th, phi.float(), cosine.float() - self.mm)
 
-        one_hot = torch.zeros(cosine.size(), device='cuda')
+        one_hot = torch.zeros(cosine.size()).type_as(phi).long()
         one_hot.scatter_(1, label.view(-1, 1).long(), 1)
         output  = (one_hot * phi) + ((1.0 - one_hot) * cosine) 
         output  *= self.s
