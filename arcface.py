@@ -4,7 +4,7 @@ import torch
 import torch.backends.cudnn as cudnn
 
 from nets.arcface import Arcface as arcface
-from utils.utils import resize_image, preprocess_input
+from utils.utils import preprocess_input, resize_image, show_config
 
 
 class Arcface(object):
@@ -57,6 +57,8 @@ class Arcface(object):
             setattr(self, name, value)
 
         self.generate()
+        
+        show_config(**self._defaults)
         
     def generate(self):
         #---------------------------------------------------#
